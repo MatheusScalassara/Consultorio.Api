@@ -1,6 +1,8 @@
 
 using Consultorio.Api.Data;
+using Consultorio.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 namespace Consultorio.Api
 {
@@ -22,15 +24,19 @@ namespace Consultorio.Api
 
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddHttpClient<ViaCepService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
+                app.MapOpenApi();
+
+                app.MapScalarApiReference(options =>
                 {
-                    options.RoutePrefix = "swagger";
+                    options.WithTitle("Consultório API")
+                    .WithTheme(ScalarTheme.DeepSpace);
                 });
             }
 
