@@ -24,8 +24,11 @@ namespace Consultorio.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostMedico(Models.Medico medico)
+        public async Task<IActionResult> PostMedico(Models.Medico medico)
         {
+            var consultorioEx = await _context.Consultorios.FindAsync(medico.ConsultorioId);
+            if (consultorioEx == null) return BadRequest("Consultório não encontrado");
+
             _context.Medicos.Add(medico);
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetMedicos), new { id = medico.Id }, medico);
