@@ -1,4 +1,5 @@
-﻿using Consultorio.Api.Models;
+﻿using Consultorio.Api.DTOs;
+using Consultorio.Api.Models;
 using Consultorio.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,8 @@ namespace Consultorio.Api.Controllers
             var medicos = await Task.Run(() => _context.Medicos.ToList());
             return Ok(medicos);
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> PostMedico(Models.Medico medico)
