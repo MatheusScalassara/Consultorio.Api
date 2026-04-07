@@ -37,7 +37,16 @@ namespace Consultorio.Api.Controllers
             return Ok(pacientes);
         }
 
-        [HttpPut]
+        [HttpGet("{id}")]
+        public IActionResult BuscarPacienteId(int id)
+        {
+            var paciente = _context.Pacientes.Find(id);
+            if (paciente == null) return NotFound();
+
+            return Ok(paciente);
+        }
+
+        [HttpPut("{id}")]
         public IActionResult EditPaciente(Models.Paciente paciente)
         {
             var erros = _pacienteService.ValidarPaciente(paciente);
